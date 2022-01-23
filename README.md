@@ -2,7 +2,7 @@
 
 ### Version
 
-- Keep Sequelize version v6.6.5
+- Keep Sequelize version v6.0.0
 
 ### Origin
 
