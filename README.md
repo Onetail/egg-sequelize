@@ -1,5 +1,11 @@
 # egg-sequelize
 
+### Version
+
+- Keep Sequelize version v6.5.2
+
+### Origin
+
 [Sequelize](http://sequelizejs.com) plugin for Egg.js.
 
 > NOTE: This plugin just for integrate Sequelize into Egg.js, more documentation please visit http://sequelizejs.com.
@@ -41,11 +47,11 @@ $ npm install --save tedious # MSSQL
 
 - Enable plugin in `config/plugin.js`
 
-``` js
+```js
 exports.sequelize = {
   enable: true,
-  package: 'egg-sequelize'
-}
+  package: 'egg-sequelize',
+};
 ```
 
 - Edit your own configurations in `conif/config.{env}.js`
@@ -108,12 +114,12 @@ Please put models under `app/model` dir by default.
 
 ## Conventions
 
-| model file       | class name              |
-| ---------------- | ----------------------- |
-| `user.js`        | `app.model.User`        |
-| `person.js`      | `app.model.Person`      |
-| `user_group.js`  | `app.model.UserGroup`   |
-| `user/profile.js`| `app.model.User.Profile`|
+| model file        | class name               |
+| ----------------- | ------------------------ |
+| `user.js`         | `app.model.User`         |
+| `person.js`       | `app.model.Person`       |
+| `user_group.js`   | `app.model.UserGroup`    |
+| `user/profile.js` | `app.model.User.Profile` |
 
 - Tables always has timestamp fields: `created_at datetime`, `updated_at datetime`.
 - Use underscore style column name, for example: `user_id`, `comments_count`.
@@ -130,7 +136,7 @@ Define a model first.
 // app/model/user.js
 
 module.exports = app => {
-  const { STRING, INTEGER, DATE } = app.Sequelize;
+  const {STRING, INTEGER, DATE} = app.Sequelize;
 
   const User = app.model.define('user', {
     login: STRING,
@@ -142,22 +148,21 @@ module.exports = app => {
     updated_at: DATE,
   });
 
-  User.findByLogin = async function(login) {
+  User.findByLogin = async function (login) {
     return await this.findOne({
       where: {
-        login: login
-      }
+        login: login,
+      },
     });
-  }
+  };
 
   // don't use arraw function
-  User.prototype.logSignin = async function() {
-    return await this.update({ last_sign_in_at: new Date() });
-  }
+  User.prototype.logSignin = async function () {
+    return await this.update({last_sign_in_at: new Date()});
+  };
 
   return User;
 };
-
 ```
 
 Now you can use it in your controller:
@@ -211,7 +216,7 @@ Then we can define model like this:
 ```js
 // app/model/user.js
 module.exports = app => {
-  const { STRING, INTEGER, DATE } = app.Sequelize;
+  const {STRING, INTEGER, DATE} = app.Sequelize;
 
   const User = app.model.define('user', {
     login: STRING,
@@ -228,7 +233,7 @@ module.exports = app => {
 
 // app/admin_model/user.js
 module.exports = app => {
-  const { STRING, INTEGER, DATE } = app.Sequelize;
+  const {STRING, INTEGER, DATE} = app.Sequelize;
 
   const User = app.adminModel.define('user', {
     login: STRING,
@@ -251,7 +256,7 @@ If you define the same model for different datasource, the same model file will 
 // if this file will load multiple times for different datasource
 // we can use the secound argument to get the sequelize instance
 module.exports = (app, model) => {
-  const { STRING, INTEGER, DATE } = app.Sequelize;
+  const {STRING, INTEGER, DATE} = app.Sequelize;
 
   const User = model.define('user', {
     login: STRING,
@@ -284,7 +289,7 @@ exports.sequelize = {
 // app/model/post.js
 
 module.exports = app => {
-  const { STRING, INTEGER, DATE } = app.Sequelize;
+  const {STRING, INTEGER, DATE} = app.Sequelize;
 
   const Post = app.model.define('Post', {
     name: STRING(30),
@@ -293,23 +298,22 @@ module.exports = app => {
     updated_at: DATE,
   });
 
-  Post.associate = function() {
-    app.model.Post.belongsTo(app.model.User, { as: 'user' });
-  }
+  Post.associate = function () {
+    app.model.Post.belongsTo(app.model.User, {as: 'user'});
+  };
 
   return Post;
 };
 ```
-
 
 ```js
 // app/controller/post.js
 class PostController extends Controller {
   async index() {
     const posts = await this.ctx.model.Post.findAll({
-      attributes: [ 'id', 'user_id' ],
-      include: { model: this.ctx.model.User, as: 'user' },
-      where: { status: 'publish' },
+      attributes: ['id', 'user_id'],
+      include: {model: this.ctx.model.User, as: 'user'},
+      where: {status: 'publish'},
       order: 'id desc',
     });
 
@@ -326,7 +330,7 @@ class PostController extends Controller {
   async destroy() {
     const post = await this.ctx.model.Post.findByPk(this.params.id);
     await post.destroy();
-    this.ctx.body = { success: true };
+    this.ctx.body = {success: true};
   }
 }
 ```
@@ -363,4 +367,3 @@ Please open an issue [here](https://github.com/eggjs/egg/issues).
 ## License
 
 [MIT](LICENSE)
-

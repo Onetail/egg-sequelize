@@ -47,10 +47,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eggjs/egg-sequelize.git"
+    "url": "git+https://github.com/Onetail/egg-sequelize"
   },
   "bugs": {
-    "url": "https://github.com/eggjs/egg/issues"
+    "url": "https://github.com/Onetail/egg-sequelize/issues"
   },
   "homepage": "https://github.com/eggjs/egg-sequelize#readme",
   "author": "jtyjty99999",
