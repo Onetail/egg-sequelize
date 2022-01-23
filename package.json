@@ -1,7 +1,7 @@
 {
   "name": "egg-sequelize-waynechu",
-  "version": "6.5.2",
-  "description": "egg Sequelize plugin, keep sequelize version 6.5.2",
+  "version": "6.6.5",
+  "description": "egg Sequelize plugin, keep sequelize version 6.6.5",
   "eggPlugin": {
     "name": "sequelize"
   },
@@ -15,7 +15,7 @@
   "dependencies": {
     "@types/sequelize": "^4.27.24",
     "mz-modules": "^2.1.0",
-    "sequelize": "6.5.2"
+    "sequelize": "6.6.5"
   },
   "devDependencies": {
     "autod": "^3.0.1",
